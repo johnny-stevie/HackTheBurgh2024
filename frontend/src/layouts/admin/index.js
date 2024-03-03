@@ -1,6 +1,6 @@
 // Chakra imports
 import { Portal, Box, useDisclosure, Text, Button, Link } from '@chakra-ui/react';
-import Footer from 'components/footer/FooterAdmin.js';
+// import Footer from 'components/footer/FooterAdmin.js';
 // Layout components
 import Navbar from 'components/navbar/NavbarAdmin.js';
 import Sidebar from 'components/sidebar/Sidebar.js';
@@ -8,10 +8,13 @@ import { SidebarContext } from 'contexts/SidebarContext';
 import React, { useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import routes from 'routes.js';
+import { useAppSelector } from 'store/hooks';
 
 // Custom Chakra theme
 export function Dashboard(props) {
 	const { ...rest } = props;
+	const selector = useAppSelector((state)=>state.value)
+
 	// states and functions
 	const [ fixed ] = useState(false);
 	const [ toggleSidebar, setToggleSidebar ] = useState(false);
@@ -100,6 +103,9 @@ export function Dashboard(props) {
 	document.documentElement.dir = 'ltr';
 	const { onOpen } = useDisclosure();
 	document.documentElement.dir = 'ltr';
+
+	if(!selector)
+    	return <Redirect from="/admin" to="/auth"/>
 	return (
 		<Box>
 			<Box>
@@ -145,7 +151,7 @@ export function Dashboard(props) {
 							</Box>
 						) : null}
 						<Box>
-							<Footer />
+							{/* <Footer /> */}
 						</Box>
 					</Box>
 				</SidebarContext.Provider>

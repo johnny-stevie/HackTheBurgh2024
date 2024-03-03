@@ -4,12 +4,12 @@ import { useAppSelector } from "../store/hooks";
 import { SignIn as AuthLayout } from "views/auth/signIn";
 
 
-export function AlreadyAuthenticated() {
-  const loginData = useAppSelector((login) => login.value);
+export function AlreadyAuthenticated({children}) {
+  const loginData = useAppSelector((state) => state.value);
   const location = useLocation();
   return loginData ? (
     <Redirect to={"/"} state={{ from: location }} replace />
   ) : (
-    <AuthLayout/>
+    children
   );
 }

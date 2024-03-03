@@ -51,9 +51,11 @@ import { useAppSelector } from "store/hooks";
 import { useAppDispatch } from "store/hooks";
 import { setLogin } from "store/loginSlice";
 import { useHistory } from "react-router-dom"
+import { Redirect } from "react-router-dom";
 
 export function SignIn() {
   // Chakra color mode
+  const selector = useAppSelector((state)=>state.value)
   const navigate = useHistory()
 
   const [email,setEmail] = useState("")
@@ -79,6 +81,9 @@ export function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+  
+  if(selector)
+    return <Redirect from="/auth" to="/admin"/>
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
       <Flex
@@ -116,7 +121,7 @@ export function SignIn() {
           mx={{ base: "auto", lg: "unset" }}
           me='auto'
           mb={{ base: "20px", md: "auto" }}>
-          <Button
+          {/* <Button
             fontSize='sm'
             me='0px'
             mb='26px'
@@ -131,14 +136,14 @@ export function SignIn() {
             _focus={googleActive}>
             <Icon as={FcGoogle} w='20px' h='20px' me='10px' />
             Sign in with Google
-          </Button>
-          <Flex align='center' mb='25px'>
+          </Button> */}
+          {/* <Flex align='center' mb='25px'>
             <HSeparator />
             <Text color='gray.400' mx='14px'>
               or
             </Text>
             <HSeparator />
-          </Flex>
+          </Flex> */}
           <FormControl>
             <FormLabel
               display='flex'
@@ -192,7 +197,7 @@ export function SignIn() {
               </InputRightElement>
             </InputGroup>
             <Flex justifyContent='space-between' align='center' mb='24px'>
-              <FormControl display='flex' alignItems='center'>
+              {/* <FormControl display='flex' alignItems='center'>
                 <Checkbox
                   id='remember-login'
                   colorScheme='brandScheme'
@@ -215,8 +220,8 @@ export function SignIn() {
                   fontWeight='500'>
                   Forgot password?
                 </Text>
-              </NavLink>
-            </Flex>
+        </NavLink>*/}
+            </Flex> 
             <Button
               fontSize='sm'
               variant='brand'
@@ -243,7 +248,7 @@ export function SignIn() {
               Sign In
             </Button>
           </FormControl>
-          <Flex
+          {/* <Flex
             flexDirection='column'
             justifyContent='center'
             alignItems='start'
@@ -261,7 +266,7 @@ export function SignIn() {
                 </Text>
               </NavLink>
             </Text>
-          </Flex>
+          </Flex> */}
         </Flex>
       </Flex>
     </DefaultAuth>

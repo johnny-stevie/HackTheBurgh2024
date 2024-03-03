@@ -10,6 +10,10 @@ import { store } from "store/loginStore";
 import { Provider } from "react-redux";
 import { AuthenticatorMiddleware } from "middleware/AuthenticatedMiddleware";
 import { AlreadyAuthenticated } from "middleware/AlreadyAuthenticated";
+import {Dashboard as AdminLayout} from "layouts/admin/index";
+import { SignIn as AuthLayout } from "views/auth/signIn";
+import { useAppSelector } from "store/hooks";
+
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
@@ -18,10 +22,14 @@ ReactDOM.render(
         <ThemeEditorProvider>
           <HashRouter>
             <Switch>
-              <Route path={`/auth`} component={AlreadyAuthenticated} />
+              
+              <Route path={`/auth`} component={AuthLayout} />
               <Route path={`/admin`} component={
               // <AuthenticatorMiddleware>
-                AuthenticatorMiddleware
+                // AuthenticatorMiddleware
+                
+                  AdminLayout
+                  
               //</AuthenticatorMiddleware>
               }/>
               <Route path={`/rtl`} component={RtlLayout} />
