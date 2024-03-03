@@ -21,7 +21,7 @@
 
 */
 
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -47,9 +47,21 @@ import illustration from "assets/img/auth/auth.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { useAppSelector } from "store/hooks";
+import { useAppDispatch } from "store/hooks";
+import { setLogin } from "store/loginSlice";
+import { useHistory } from "react-router-dom"
 
-function SignIn() {
+export function SignIn() {
   // Chakra color mode
+  const navigate = useHistory()
+
+  const [email,setEmail] = useState("")
+  const [password,setPassword] = useState("")
+
+  const dispatch = useAppDispatch()
+
+
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
@@ -147,6 +159,8 @@ function SignIn() {
               mb='24px'
               fontWeight='500'
               size='lg'
+              onChange={(e)=>setEmail(e.target.value)}
+              value={email}
             />
             <FormLabel
               ms='4px'
@@ -165,6 +179,8 @@ function SignIn() {
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
+                onChange={(e)=>setPassword(e.target.value)}
+                value={password}
               />
               <InputRightElement display='flex' alignItems='center' mt='4px'>
                 <Icon
@@ -207,7 +223,23 @@ function SignIn() {
               fontWeight='500'
               w='100%'
               h='50'
-              mb='24px'>
+              mb='24px' onClick={async () => {
+                const res = await fetch("http://localhost:5000/api/login?"
+                  + new URLSearchParams({
+                    username: email,
+                    password: password,
+                }))
+                const response = await res.text();
+                if(response === "OK"){
+                  console.log("Logged in")
+                  localStorage.setItem("bioCinoXEmail",JSON.stringify(email))
+                  dispatch(setLogin({value:email}))
+                  navigate.push("/admin")
+                } else{
+                  console.log(response)
+                  console.log("failed")
+                }
+              }}>
               Sign In
             </Button>
           </FormControl>
@@ -236,4 +268,3 @@ function SignIn() {
   );
 }
 
-export default SignIn;

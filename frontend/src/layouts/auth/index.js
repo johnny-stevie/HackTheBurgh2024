@@ -9,7 +9,7 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 import { SidebarContext } from "contexts/SidebarContext";
 
 // Custom Chakra theme
-export default function Auth() {
+export function Auth() {
   // states and functions
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components

@@ -3,9 +3,11 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import { useAppSelector } from "store/hooks";
 
 export function SidebarLinks(props) {
-  //   Chakra color mode
+
+  const selector = useAppSelector((state) => state.value)
   let location = useLocation();
   let activeColor = useColorModeValue("gray.700", "white");
   let inactiveColor = useColorModeValue(
@@ -25,6 +27,16 @@ export function SidebarLinks(props) {
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (routes) => {
+    console.log(selector)
+    routes = routes.filter((route)=>{
+      if(route.layout === "/admin" && !selector) {
+        return false
+      }
+      if(route.layout === "/auth" && selector){
+        return false
+      }
+      return true
+    })
     return routes.map((route, index) => {
       if (route.category) {
         return (
