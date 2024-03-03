@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from flask_cors import CORS
+from flask_socketio import SocketIO
 
 load_dotenv()
 app = Flask(__name__)
